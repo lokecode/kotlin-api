@@ -29,10 +29,14 @@ class MainActivity : AppCompatActivity() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getCustomPosts(5,"id", "desc")
-        viewModel.myCustomPosts.observe(this, Observer { response ->
+        
+        //val myPost = Post(2, 2, "Stevdza", "Android Developer")
+        viewModel.pushPost2(2, 2, "Stevdza", "Android Developer")
+        viewModel.myResponse.observe(this, Observer { response ->
             if(response.isSuccessful){
-                response.body()?.let { myAdapter.setData(it) }
+                Log.d("Main", response.body().toString())
+                Log.d("Main", response.code().toString())
+                Log.d("Main", response.message())
             }else {
                 Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
             }
